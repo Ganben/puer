@@ -21,7 +21,7 @@ log.addHandler(ch)
 # set logging levels, etc
 log.setLevel(logging.INFO)
 
-with codecs.open('./textprocess/charfrequency.txt', encoding='utf-8') as f:
+with codecs.open('./chardict/charfrequency.txt', encoding='utf-8') as f:
     content = f.readlines()
 # source: Jun Da 笪骏 (jda@mtsu.edu) http://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=TO
 log.debug('len %s read' % len(content))

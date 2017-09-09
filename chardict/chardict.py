@@ -43,14 +43,40 @@ def text_to_intint(text):
     :param text: 'char'
     :return: ([(int,int)], non-char seq[(pos, [])])
     """
-    pass
+    aii = []
+    sii = []
+    count = 0
+    for c in text:
+        ii = trans_code(c)
+        if ii:
+            aii.append(ii)
+        else:
+            sii.append((count, c))
+        count += 1
+    return (aii, sii)
 
 
-def join_text(aii, sii):
+def join_text(aii, sii=None):
     """
     join the split two seq to text
     :param aii: [(int,int)]
     :param sii: [(int, str)]
     :return: text str
     """
-    pass
+    r = []
+    if not sii:
+        for e in aii:
+            r.append(reverse_code(e))
+        return ''.join(r)
+
+    else:
+
+        for e in aii:
+            for s in sii:
+                if len(r) == s[0]:
+                    r.append(s[1])
+                elif len(r) < s[0]:
+                    break
+            # advance feature: iter generator for this loop
+            r.append(reverse_code(e))
+        return ''.join(r)

@@ -6,6 +6,7 @@
 from xtea3 import *
 from ecdsa import SigningKey
 from ecdsa import VerifyingKey
+from ecdsa import NIST192p
 from ecdsa import BadSignatureError
 from ecdsa.util import randrange_from_seed__trytryagain
 
@@ -30,7 +31,7 @@ ch.setFormatter(formatter)
 log.addHandler(ch)
 # set formatters,
 # set logging levels, etc
-log.setLevel(logging.INFO)
+log.setLevel(logging.DEBUG)
 
 def make_key(seed):
     secexp = randrange_from_seed__trytryagain(seed)
@@ -53,14 +54,21 @@ def generate_keypair(seed = None):
 
     return (bin2intint(sk.to_string()), bin2intint(vk.to_string()))
 
-def sign_message(aii, msg):
+def sign_message(key, msg):
     """
     return signature
-    :param aii: [(int, int), (), ()]
+    :param key: [(int, int), (), ()]
+    :param msg: [(int, int)]
     :return: signature [(int, int)]
     """
-    bsk = intint2bin(aii)
-    sk = SigningKey.from_string(bsk)
+    log.debug('key msg=%s, %s' % (key, msg))
+    bsk = intint2bin(key)
+    log.debug('bsk:%s' % len(bsk))
+    bsk = bin_str2byte(bsk)
+    log.debug('bsk:%s' % bsk)
+    msg = intint2bin(msg)
+    msg = bin_str2byte(msg)
+    sk = SigningKey.from_string(bsk, curve=NIST192p)
     signature = sk.sign(msg)
 
     return bin2intint(signature)
@@ -76,7 +84,11 @@ def verify_message(bvk, sig, msg):
     bvk = intint2bin(bvk)
     sig = intint2bin(sig)
     msg = intint2bin(msg)
-    vk = VerifyingKey.from_string(bvk)
+    bvk = bin_str2byte(bvk)
+    sig = bin_str2byte(sig)
+    msg = bin_str2byte(msg)
+
+    vk = VerifyingKey.from_string(bvk, curve=NIST192p)
     try:
         vk.verify(sig, msg)
         return True
