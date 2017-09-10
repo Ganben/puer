@@ -7,6 +7,8 @@ import logging
 import pickle
 import codecs
 import re
+import os
+script_dir = os.path.dirname(__file__)
 
 log = logging.getLogger(__name__)
 ch = logging.StreamHandler()
@@ -20,8 +22,8 @@ log.addHandler(ch)
 # set formatters,
 # set logging levels, etc
 log.setLevel(logging.INFO)
-
-with codecs.open('./chardict/charfrequency.txt', encoding='utf-8') as f:
+filepath = os.path.join(script_dir, 'charfrequency.txt')
+with codecs.open(filepath, encoding='utf-8') as f:
     content = f.readlines()
 # source: Jun Da 笪骏 (jda@mtsu.edu) http://lingua.mtsu.edu/chinese-computing/statistics/char/list.php?Which=TO
 log.debug('len %s read' % len(content))
