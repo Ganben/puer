@@ -3,7 +3,7 @@
 # ganben
 # entrancy func of char dict utilities
 
-import chardict.generate_sub_table as ge
+import puer.chardict.generate_sub_table as ge
 
 
 
