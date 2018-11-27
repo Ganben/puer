@@ -8,6 +8,8 @@ import pickle
 import codecs
 import re
 import os
+import unittest
+
 script_dir = os.path.dirname(__file__)
 
 log = logging.getLogger(__name__)
@@ -71,3 +73,19 @@ def get_long_dict():
 
 def get_ntc_array():
     return ntc_array
+
+
+def save_to_file():
+    lines = []
+    for k,v in long_dict_ctn.items():
+        lines.append('%s,%d,%d\n' % (k, v[0], v[1]))
+    filepath = os.path.join(script_dir, 'chartable.csv')
+    with open(filepath, 'w') as f:
+        f.writelines(lines)
+    
+    return True
+
+
+class Test1(unittest.TestCase):
+    def test1(self):
+        self.assertIsNotNone(save_to_file())
