@@ -82,10 +82,22 @@ def save_to_file():
     filepath = os.path.join(script_dir, 'chartable.csv')
     with open(filepath, 'w') as f:
         f.writelines(lines)
-    
     return True
 
+def save_ctn():
+    lines = []
+    for i in range(0,64):
+        line = []
+        for j in range(0,64):
+            line.append(ntc_array[i][j])
+        lines.append(','.join(line)+'\n')
+    filepath = os.path.join(script_dir, 'ctnarray.csv')
+    with open(filepath, 'w') as f:
+        f.writelines(lines)
+    return filepath
 
 class Test1(unittest.TestCase):
     def test1(self):
         self.assertIsNotNone(save_to_file())
+    def test2(self):
+        self.assertIsNotNone(save_ctn())
