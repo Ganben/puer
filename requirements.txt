@@ -1,2 +1,4 @@
 xtea3
 ecdsa
+xxtea-py
+cffi
