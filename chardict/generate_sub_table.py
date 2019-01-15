@@ -82,6 +82,9 @@ def save_to_file():
     filepath = os.path.join(script_dir, 'chartable.csv')
     with open(filepath, 'w') as f:
         f.writelines(lines)
+    filepath2 = os.path.join(script_dir, 'chartable_utf8.csv')
+    with codecs.open(filepath2,'w',encoding='utf8') as f:
+        f.writelines(lines)
     return True
 
 def save_ctn():
@@ -89,11 +92,43 @@ def save_ctn():
     for i in range(0,64):
         line = []
         for j in range(0,64):
-            line.append(ntc_array[i][j])
+            line.append("%s" % ntc_array[i][j])
         lines.append(','.join(line)+'\n')
     filepath = os.path.join(script_dir, 'ctnarray.csv')
     with open(filepath, 'w') as f:
         f.writelines(lines)
+    
+    filepath2 = os.path.join(script_dir, 'ctnarray_utf8.csv')
+    with codecs.open(filepath2,'w',encoding='utf8') as f:
+        f.writelines(lines)
+
+def save_to_file2():
+    lines = []
+    for k,v in long_dict_ctn.items():
+        lines.append('\'%s\',%d,%d\n' % (k, v[0], v[1]))
+    filepath = os.path.join(script_dir, 'chartable2.csv')
+    with open(filepath, 'w') as f:
+        f.writelines(lines)
+    filepath2 = os.path.join(script_dir, 'chartable_utf82.csv')
+    with codecs.open(filepath2,'w',encoding='utf8') as f:
+        f.writelines(lines)
+    return True
+
+def save_ctn2():
+    lines = []
+    for i in range(0,64):
+        line = []
+        for j in range(0,64):
+            line.append("\'%s\'" % ntc_array[i][j])
+        lines.append(','.join(line)+'\n')
+    filepath = os.path.join(script_dir, 'ctnarray2.csv')
+    with open(filepath, 'w') as f:
+        f.writelines(lines)
+    
+    filepath2 = os.path.join(script_dir, 'ctnarray_utf82.csv')
+    with codecs.open(filepath2,'w',encoding='utf8') as f:
+        f.writelines(lines)
+
     return filepath
 
 class Test1(unittest.TestCase):
