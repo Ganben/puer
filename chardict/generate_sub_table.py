@@ -114,6 +114,21 @@ def save_to_file2():
         f.writelines(lines)
     return True
 
+def save_to_java():
+    lines = []
+    for k,v in long_dict_ctn.items():
+        lines.append('{%d,%d},\n' % (v[0], v[1]))
+    filepath = os.path.join(script_dir, 'chartable_java_int.csv')
+    with codecs.open(filepath,'w',encoding='utf8') as f:
+        f.writelines(lines)
+    lines2 = []
+    for k,v in long_dict_ctn.items():
+        lines2.append('\'%s\',\n' % k)
+    filepath = os.path.join(script_dir, 'chartable_java_char.csv')
+    with codecs.open(filepath,'w',encoding='utf8') as f:
+        f.writelines(lines2)
+    
+
 def save_ctn2():
     lines = []
     for i in range(0,64):
