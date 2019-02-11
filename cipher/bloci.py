@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
 # a block cipher implement
+import unittest
+import random
 
 class Cipher:
 
@@ -58,3 +60,14 @@ class Cipher:
             output.append(output_e)
             op_mod.append(op_mod_e)
         return output
+
+
+class Test(unittest.TestCase):
+    def t1(self):
+        o = Cipher([62,60,0,1,0,27])
+        c = []
+        for i in range(100):
+            c.append(random.randint(0,63))
+        e = o.encrypt(c)
+        self.assertListEqual(c, o.decrypt(e))
+        
