@@ -6,7 +6,7 @@ class Cipher:
 
     def __init__(self, key):
         # build state bytes
-        # key = bytearray, each 0-64, half char code
+        # key = bytearray, each 0-64, half char code/ not, it is a int array 2n ele
         self.key = key
         self.state = bytearray(64)
         self.init_state()
@@ -36,3 +36,25 @@ class Cipher:
         ret = self.state[(self.state[self.pi] + self.state[self.pj]) % 64 ]
         return ret
         
+    def encrypt(self, content):
+        # content is a bytearray or int array 2n ele
+        # the position based pseudo_random plus output's mod
+        output = []
+        op_mod = [0]
+        for el in content:
+            output_e = el ^ self.pseudo_random() ^ op_mod[-1]
+            op_mod_e = (output_e + el) % 64
+            output.append(output_e)
+            op_mod.append(op_mod_e)
+        return output
+
+    def decrypt(self, content):
+        # content is a bytearray or int array 2n ele
+        output = []
+        op_mod = [0]
+        for el in content:
+            output_e = el ^ self.pseudo_random() ^ op_mod[-1]
+            op_mod_e = (output_e + el) % 64
+            output.append(output_e)
+            op_mod.append(op_mod_e)
+        return output
